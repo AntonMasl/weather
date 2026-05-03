@@ -5,9 +5,6 @@ function onClick() {
       return ""
     }
     return ""
-    console.log(i)
-    continue
-    return i
   }
 }
 </script>
