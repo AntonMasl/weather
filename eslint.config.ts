@@ -9,28 +9,26 @@ import prettierPlugin from "eslint-plugin-prettier"
 import prettierConfig from "eslint-config-prettier"
 
 export default defineConfig([
-  {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"],
-    plugins: { js, prettier: prettierPlugin },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
-    rules: {
-      "prettier/prettier": "error",
-      "no-console": "error",
-      curly: "warn",
-      eqeqeq: "error",
-      semi: ["error", "always"],
+    {
+        files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"],
+        plugins: { js, prettier: prettierPlugin },
+        extends: ["js/recommended"],
+        languageOptions: { globals: globals.browser },
+        rules: {
+            "prettier/prettier": "error",
+            "no-console": "error",
+            eqeqeq: "error",
+        },
     },
-  },
-  tseslint.configs.recommended,
-  pluginVue.configs["flat/essential"],
-  {
-    files: ["**/*.vue"],
-    languageOptions: {
-      parserOptions: {
-        parser: tseslint.parser,
-      },
+    tseslint.configs.recommended,
+    pluginVue.configs["flat/essential"],
+    {
+        files: ["**/*.vue"],
+        languageOptions: {
+            parserOptions: {
+                parser: tseslint.parser,
+            },
+        },
     },
-  },
-  prettierConfig, // объект с правилами, отключающими конфликты
+    prettierConfig, // объект с правилами, отключающими конфликты
 ])

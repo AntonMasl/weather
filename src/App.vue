@@ -1,27 +1,16 @@
-<script setup lang="ts">
-function onClick() {
-  for (let i = 0; i < 10; i++) {
-    if (i === 2) {
-      return ""
-    }
-    return ""
-  }
-}
-</script>
-
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit
-    <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to
-    read the documentation
-  </p>
+    <h1>You did it!</h1>
+    <p>
+        Visit
+        <a href="https://vuejs.org/" target="_blank" rel="noopener"
+            >vuejs.org</a
+        >
+        to read the documentation
+    </p>
 </template>
 
-<style scoped>
-.a {
-}
+<script setup lang="ts">
+function onClick() {}
+</script>
 
-.b {
-}
-</style>
+<style lang="scss"></style>
