@@ -7,5 +7,6 @@ export default {
     rules: {
         "custom-property-pattern": "^[a-z][a-zA-Z0-9]+$", // lowerCamelCase
         "value-keyword-case": ["lower", { ignoreKeywords: ["currentColor"] }],
+        "selector-class-pattern": "^[a-z][a-z0-9_-]*$",
     },
 }
