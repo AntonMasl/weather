@@ -30,5 +30,4 @@ export default defineConfig([
             },
         },
     },
-    prettierConfig, // объект с правилами, отключающими конфликты
 ])
