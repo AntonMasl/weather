@@ -8,27 +8,23 @@
                 <div class="theme">Dark/Light</div>
             </div>
         </header>
-        <section class="search">
+        <section class="city-search">
             <div class="container">
-                <div class="search__inner card">
-                    <label
-                        class="search__label"
-                        for="search"
-                    >
-                        Поиск города
-                    </label>
-                    <input
-                        class="search__input"
-                        type="text"
-                        id="search"
-                    />
+                <div class="city-search__inner card">
+                    <div class="city-search__label">Поиск города</div>
+                    <city-search-input v-model="city" />
                 </div>
             </div>
         </section>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import CitySearchInput from "@/components/city-search-input.vue"
+import { ref } from "vue"
+
+const city = ref("")
+</script>
 
 <style lang="scss" scoped>
 .weather {
@@ -54,6 +50,16 @@
             0 4px 6px -1px rgb(0 0 0 / 10%),
             0 2px 4px -1px rgb(0 0 0 / 6%);
         padding: 16px;
+    }
+
+    .city-search {
+        &__label {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 8px;
+            text-align: center;
+        }
     }
 }
 </style>

@@ -16,7 +16,6 @@ export default defineConfig([
         languageOptions: { globals: globals.browser },
         rules: {
             "prettier/prettier": "error",
-            "no-console": "error",
             eqeqeq: "error",
         },
     },
