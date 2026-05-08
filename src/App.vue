@@ -12,7 +12,7 @@
             <div class="container">
                 <div class="city-search__inner card">
                     <div class="city-search__label">Поиск города</div>
-                    <city-search-input v-model="city" />
+                    <search-input v-model="city" />
                 </div>
             </div>
         </section>
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import CitySearchInput from "@/components/city-search-input.vue"
 import { ref } from "vue"
+import SearchInput from "@/components/search-input.vue"
 
 const city = ref("")
 </script>
