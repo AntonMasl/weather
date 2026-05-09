@@ -13,8 +13,10 @@
                 <div class="location-search__inner card">
                     <div class="location-search__label">Поиск локации</div>
                     <search-input
-                        v-model="locationSearchValue"
+                        :model-value="locationSearchValue"
                         :search-items="locationsSearchItems"
+                        placeholder="Введите город ..."
+                        @update:model-value="onLocationSearch"
                     />
                 </div>
             </div>
@@ -23,8 +25,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
 import SearchInput from "@/components/search-input.vue"
+import { API_KEY, API_URL } from "@/config.ts"
 
 export interface Location {
     id: string
@@ -61,6 +64,23 @@ const locationsSearchItems = computed<SearchItem[]>(() => {
             name: location.name,
         }))
 })
+
+async function onLocationSearch(searchValue: string) {
+    locationSearchValue.value = searchValue
+    console.log("onLocationSearch", locationSearchValue.value)
+    const weatherData = await getWeatherData(locationSearchValue.value)
+    console.log("weatherData", weatherData)
+}
+
+async function getWeatherData(location: string) {
+    // const response = await fetch(`${API_URL}?q=${location}&appid=${API_KEY}`)
+    const response = await fetch(`${API_URL}?q=${location}&limit=5&appid=${API_KEY}`)
+    if (!response.ok) {
+        console.log("Ошибка HTTP: " + response.status)
+        return
+    }
+    return await response.json()
+}
 </script>
 
 <style lang="scss" scoped>

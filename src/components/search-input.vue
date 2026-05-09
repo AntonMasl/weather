@@ -45,8 +45,8 @@
             </svg>
             <input
                 v-model="searchValue"
+                :placeholder="placeholder"
                 type="text"
-                placeholder="Введите город ..."
             />
             <svg
                 v-if="searchValue.length"
@@ -86,6 +86,7 @@ import { onBeforeUnmount, onMounted, ref, useTemplateRef } from "vue"
 
 const props = defineProps<{
     searchItems: SearchItem[]
+    placeholder: string
 }>()
 
 const searchValue = defineModel<string>({ required: true })
