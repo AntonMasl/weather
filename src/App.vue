@@ -8,11 +8,14 @@
                 <div class="theme">Dark/Light</div>
             </div>
         </header>
-        <section class="city-search">
+        <section class="location-search">
             <div class="container">
-                <div class="city-search__inner card">
-                    <div class="city-search__label">Поиск города</div>
-                    <search-input v-model="city" />
+                <div class="location-search__inner card">
+                    <div class="location-search__label">Поиск локации</div>
+                    <search-input
+                        v-model="locationSearchValue"
+                        :search-items="locationsSearchItems"
+                    />
                 </div>
             </div>
         </section>
@@ -20,11 +23,44 @@
 </template>
 
 <script setup lang="ts">
-import CitySearchInput from "@/components/city-search-input.vue"
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import SearchInput from "@/components/search-input.vue"
 
-const city = ref("")
+export interface Location {
+    id: string
+    name: string
+}
+
+export interface SearchItem {
+    id: string
+    name: string
+}
+
+const locationSearchValue = ref("")
+
+const locations = ref<Location[]>([
+    {
+        id: "1",
+        name: "Тула",
+    },
+    {
+        id: "2",
+        name: "Москва",
+    },
+    {
+        id: "3",
+        name: "Лондон",
+    },
+])
+
+const locationsSearchItems = computed<SearchItem[]>(() => {
+    return locations.value
+        .filter((location) => location.name.startsWith(locationSearchValue.value))
+        .map((location) => ({
+            id: location.id,
+            name: location.name,
+        }))
+})
 </script>
 
 <style lang="scss" scoped>
@@ -53,7 +89,7 @@ const city = ref("")
         padding: 16px;
     }
 
-    .city-search {
+    .location-search {
         &__label {
             font-size: 24px;
             font-weight: 700;
