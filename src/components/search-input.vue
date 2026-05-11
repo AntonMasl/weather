@@ -71,7 +71,46 @@
                 :key="item.id"
                 class="search-items-list__item"
             >
-                {{ item.name }}
+                <div class="search-items-list__item-content">
+                    <span>{{ item.name }}</span>
+                    <div
+                        v-if="item.underNameText"
+                        class="under-name-text"
+                    >
+                        {{ item.underNameText }}
+                    </div>
+                </div>
+                <svg
+                    class="favorite-icon"
+                    width="36"
+                    height="36"
+                    viewBox="0 0 512 512"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <g clip-path="url(#clip0_1_118)">
+                        <circle
+                            cx="256"
+                            cy="256"
+                            r="240"
+                            stroke="#212529"
+                            stroke-width="32"
+                        />
+                        <path
+                            d="M246.156 114.27C249.15 105.057 262.184 105.057 265.177 114.27L291.739 196.017C293.077 200.137 296.917 202.927 301.249 202.927H387.203C396.89 202.927 400.918 215.323 393.081 221.017L323.543 271.539C320.038 274.085 318.571 278.599 319.91 282.719L346.471 364.466C349.465 373.679 338.92 381.34 331.083 375.646L261.544 325.124C258.04 322.577 253.294 322.577 249.789 325.124L180.25 375.646C172.413 381.34 161.868 373.679 164.862 364.465L191.423 282.719C192.762 278.599 191.295 274.085 187.79 271.539L118.252 221.017C110.415 215.323 114.443 202.927 124.13 202.927H210.084C214.416 202.927 218.256 200.137 219.595 196.017L246.156 114.27Z"
+                            fill="#212529"
+                        />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1_118">
+                            <rect
+                                width="512"
+                                height="512"
+                                fill="white"
+                            />
+                        </clipPath>
+                    </defs>
+                </svg>
             </li>
         </ul>
     </div>
@@ -126,6 +165,7 @@ onBeforeUnmount(() => {
 .search-input {
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
 
     .input-wrapper {
         position: relative;
@@ -136,7 +176,7 @@ onBeforeUnmount(() => {
         input {
             width: 100%;
             font-size: 16px;
-            padding: 8px 8px 8px 48px;
+            padding: 8px 48px;
             border-radius: 8px;
             border: 2px solid $darkgray;
             outline: none;
@@ -171,6 +211,10 @@ onBeforeUnmount(() => {
         border: 2px solid dimgray;
         border-radius: 8px;
         overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: white;
 
         &__item {
             padding: 16px;
@@ -178,6 +222,21 @@ onBeforeUnmount(() => {
             &:hover {
                 background-color: aliceblue;
                 cursor: pointer;
+            }
+
+            display: flex;
+            justify-content: space-between;
+
+            .favorite-icon {
+                margin-left: 16px;
+                align-self: center;
+                flex-shrink: 0;
+                transition: 200ms;
+                fill: white;
+
+                &:hover {
+                    color: orange;
+                }
             }
         }
     }

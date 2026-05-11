@@ -25,61 +25,55 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue"
+import { computed, ref } from "vue"
 import SearchInput from "@/components/search-input.vue"
-import { API_KEY, API_URL } from "@/config.ts"
-
-export interface Location {
-    id: string
-    name: string
-}
+import * as API from "@/api"
+import type { Location } from "@/definitions"
 
 export interface SearchItem {
     id: string
     name: string
+    underNameText?: string
 }
 
 const locationSearchValue = ref("")
 
-const locations = ref<Location[]>([
-    {
-        id: "1",
-        name: "Тула",
-    },
-    {
-        id: "2",
-        name: "Москва",
-    },
-    {
-        id: "3",
-        name: "Лондон",
-    },
-])
+const locations = ref<Location[]>([])
 
 const locationsSearchItems = computed<SearchItem[]>(() => {
-    return locations.value
-        .filter((location) => location.name.startsWith(locationSearchValue.value))
-        .map((location) => ({
-            id: location.id,
-            name: location.name,
-        }))
+    return locations.value.map((location) => ({
+        id: `${location.lat}_${location.lon}`,
+        name: location.state ? `${location.name}, ${location.state}` : location.name,
+        underNameText: `${location.lat.toFixed(2)}, ${location.lon.toFixed(2)}`,
+    }))
 })
+
+let timeoutId: ReturnType<typeof setTimeout> | null = null
 
 async function onLocationSearch(searchValue: string) {
     locationSearchValue.value = searchValue
     console.log("onLocationSearch", locationSearchValue.value)
-    const weatherData = await getWeatherData(locationSearchValue.value)
-    console.log("weatherData", weatherData)
-}
-
-async function getWeatherData(location: string) {
-    // const response = await fetch(`${API_URL}?q=${location}&appid=${API_KEY}`)
-    const response = await fetch(`${API_URL}?q=${location}&limit=5&appid=${API_KEY}`)
-    if (!response.ok) {
-        console.log("Ошибка HTTP: " + response.status)
+    const search = locationSearchValue.value.trim()
+    if (timeoutId) {
+        clearTimeout(timeoutId)
+    }
+    if (!search) {
+        locations.value = []
         return
     }
-    return await response.json()
+    timeoutId = setTimeout(async () => {
+        locations.value = await getLocations(search)
+        timeoutId = null
+    }, 400)
+}
+
+async function getLocations(search: string) {
+    try {
+        return await API.getLocations(search)
+    } catch (error) {
+        console.error(error)
+        return []
+    }
 }
 </script>
 
